@@ -8,3 +8,4 @@ export { ProductGridItem } from "./products/product-grid/ProductGridItem";
 export { Sidebar } from "./ui/sidebar/Sidebar";
 
 export { SizeSelector } from "./product/size-selector/SizeSelector";
+export { QuantitySelector } from "./product/quantity-selector/QuantitySelector"
