@@ -15,19 +15,19 @@ async function main() {
   const { categories, products } = initialData;
 
   const categoriData = categories.map((category) => ({
-    name: category
+    name: category,
   }));
 
   await prisma.category.createMany({
-    data: categoriData
+    data: categoriData,
   });
 
   //get category from database, for get id the category
   const categoryDB = await prisma.category.findMany();
 
   const categoryMap = categoryDB.reduce((map, category) => {
-    map[category.name.toLocaleLowerCase()] = category.id
-    return map
+    map[category.name.toLocaleLowerCase()] = category.id;
+    return map;
   }, {} as Record<string, string>); // <string=nameCategory, string =categoryID>
   console.log(categoryMap);
 
@@ -36,26 +36,25 @@ async function main() {
     const dbProducto = await prisma.product.create({
       data: {
         ...rest,
-        categoryId: categoryMap[type]
-      }
+        categoryId: categoryMap[type],
+      },
     });
     //add images
-    const imageData = images.map(image => ({
+    const imageData = images.map((image) => ({
       url: image,
-      productId: dbProducto.id
+      productId: dbProducto.id,
     }));
 
     await prisma.productImage.createMany({
-      data: imageData
+      data: imageData,
     });
-
   });
 
   console.log("Seed finished");
 }
 
 (() => {
-  if ((process.env.NODE_ENV = "production")) return;
+  if (process.env.NODE_ENV === "production") return;
 
   main();
 })();
