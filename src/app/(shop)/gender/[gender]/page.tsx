@@ -1,6 +1,10 @@
+export const revalidate = 60; // 60 segundos
+
+import { redirect } from "next/navigation";
+import { Gender } from "@prisma/client";
+
 import { getPaginateProductsWithImages } from "@/actions";
 import { Pagination, ProductGrid, Title } from "@/components";
-import { Gender } from "@prisma/client";
 
 interface Props {
   params: {
@@ -22,12 +26,16 @@ export default async function GenderPage({ params, searchParams }: Props) {
       gender: gender as Gender,
     });
 
-    const labels: Record<string, string> = {
-        men: "para hombres",
-        women: "para mujeres",
-        kid: "para niños",
-        unisex: "para todos",
-      };
+  if (products.length === 0) {
+    redirect(`/gender/${gender}`);
+  }
+
+  const labels: Record<string, string> = {
+    men: "para hombres",
+    women: "para mujeres",
+    kid: "para niños",
+    unisex: "para todos",
+  };
 
   return (
     <>
