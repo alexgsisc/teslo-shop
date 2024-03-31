@@ -1,8 +1,13 @@
+//manger cache 
+export const revalidate = 2592000; // 3 days
+
+import { getProductBySlug } from "@/actions";
 import {
   ProductMobileSlideshow,
   ProductSlideshow,
   QuantitySelector,
   SizeSelector,
+  StockLabel,
 } from "@/components";
 import { titleFont } from "@/config/fonts";
 import { initialData } from "@/seed/seed";
@@ -14,10 +19,12 @@ interface ProductPageProps {
   };
 }
 
-const products = initialData.products;
+//const products = initialData.products;
 
-export default function ProductPage({ params }: ProductPageProps) {
-  const product = products.find((product) => product.slug === params.slug);
+export default async function ProductPage({ params }: ProductPageProps) {
+
+  const product = await getProductBySlug(params.slug);
+
 
   if (!product) {
     notFound();
@@ -46,7 +53,10 @@ export default function ProductPage({ params }: ProductPageProps) {
         <h1 className={` ${titleFont.className} antialiased font-bold text-xl`}>
           {product.title}
         </h1>
+        {/* Stock */}
+        <StockLabel slug={product.slug} />
 
+        {/* Precio */}
         <p className="text-lg mb-5">${product.price}</p>
 
         {/* Selector de Tallas */}
