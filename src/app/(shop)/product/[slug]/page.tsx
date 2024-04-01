@@ -1,7 +1,8 @@
-//manger cache 
-export const revalidate = 2592000; // 3 days
+//manger cache
+export const revalidate = 259200; // 3 days
 
-import { getProductBySlug } from "@/actions";
+import { Metadata, ResolvingMetadata } from "next";
+import { notFound } from "next/navigation";
 import {
   ProductMobileSlideshow,
   ProductSlideshow,
@@ -9,9 +10,9 @@ import {
   SizeSelector,
   StockLabel,
 } from "@/components";
+
+import { getProductBySlug } from "@/actions";
 import { titleFont } from "@/config/fonts";
-import { initialData } from "@/seed/seed";
-import { notFound } from "next/navigation";
 
 interface ProductPageProps {
   params: {
@@ -19,12 +20,35 @@ interface ProductPageProps {
   };
 }
 
+export async function generateMetadata(
+  { params }: ProductPageProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const slug = params.slug;
+
+  // fetch data
+  //const product = await fetch(`https://.../${id}`).then((res) => res.json())
+  const product = await getProductBySlug(slug);
+
+  // optionally access and extend (rather than replace) parent metadata
+  //const previousImages = (await parent).openGraph?.images || []
+
+  return {
+    title: product?.title ?? "Product not found",
+    description: product?.description ?? "Product not found",
+    openGraph: {
+      title: product?.title ?? "Product not found",
+      description: product?.description ?? "Product not found",
+      images: [`/products/${product?.images[1]}`],
+    },
+  };
+}
+
 //const products = initialData.products;
 
 export default async function ProductPage({ params }: ProductPageProps) {
-
   const product = await getProductBySlug(params.slug);
-
 
   if (!product) {
     notFound();
