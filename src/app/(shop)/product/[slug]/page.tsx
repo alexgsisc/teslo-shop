@@ -11,7 +11,7 @@ import {
 
 import { getProductBySlug } from "@/actions";
 import { titleFont } from "@/config/fonts";
-import { AddtoCart } from "./ui/AddtoCart";
+import { AddToCart } from "./ui/AddToCart";
 
 interface ProductPageProps {
   params: {
@@ -82,7 +82,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         {/* Precio */}
         <p className="text-lg mb-5">${product.price}</p>
 
-        <AddtoCart product={product} />
+        <AddToCart product={product} />
 
         {/* Descripción */}
         <h3 className="font-bold text-sm">Descripción</h3>
