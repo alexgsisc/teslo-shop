@@ -7,17 +7,17 @@ interface State {
   cartProducts: CartProduct[];
   addProductToCart: (product: CartProduct) => void;
   updateProductQuantity: (product: CartProduct, quantity: number) => void;
-  //removeProductToCart: (product: CartProct) => void;
+  removeProductToCart: (product: CartProduct) => void;
 }
 
 export const useCartStore = create<State>()(
   persist(
     (set, get) => ({
       cartProducts: [],
-       getTotalItems: () => {
-         const {cartProducts} = get();
-         return cartProducts.reduce((total, item) => total + item.quaity, 0);
-       },
+      getTotalItems: () => {
+        const { cartProducts } = get();
+        return cartProducts.reduce((total, item) => total + item.quaity, 0);
+      },
       //methods
       addProductToCart: (product: CartProduct) => {
         const { cartProducts } = get();
@@ -48,6 +48,13 @@ export const useCartStore = create<State>()(
           return item;
         });
         set({ cartProducts: updatedCartProducts });
+      },
+      removeProductToCart: (product: CartProduct) => {
+        const { cartProducts } = get();
+        const productCart = cartProducts.filter(
+          (item) => (item.id !== product.id || item.size !== product.size)
+        )
+        set({ cartProducts: productCart });
       }
     }),
     {
