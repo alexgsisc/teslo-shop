@@ -9,6 +9,9 @@ import { QuantitySelector } from "@/components";
 export const ProductsInCart = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const productsInCart = useCartStore((state) => state.cartProducts);
+  const updateProductQuantity = useCartStore(
+    (state) => state.updateProductQuantity
+  );
 
   useEffect(() => {
     setIsLoaded(true);
@@ -47,7 +50,7 @@ export const ProductsInCart = () => {
             <p>${product.price}</p>
             <QuantitySelector
               quantity={product.quaity}
-              onQuantityChanged={(value) => console.log(value)}
+              onQuantityChanged={(value) => updateProductQuantity(product, value)}
             />
 
             <button className="underline mt-3">Remover</button>
