@@ -7,6 +7,7 @@ import { useFormState } from "react-dom";
 export const LoginForm = () => {
 
   const [state, dispatch] = useFormState(authenticate, undefined);
+  console.log(state);
   return (
     <>
       <form action={dispatch} className="flex flex-col">
@@ -14,15 +15,17 @@ export const LoginForm = () => {
         <input
           className="px-5 py-2 border bg-gray-200 rounded mb-5"
           type="email"
+          name="email"
         />
 
         <label htmlFor="email">Contraseña</label>
         <input
           className="px-5 py-2 border bg-gray-200 rounded mb-5"
-          type="email"
+          type="password"
+          name="password"
         />
 
-        <button className="btn-primary">Ingresar</button>
+        <button type ="submit" className="btn-primary">Ingresar</button>
 
         {/* divisor l ine */}
         <div className="flex items-center my-5">

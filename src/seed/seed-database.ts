@@ -6,13 +6,18 @@ async function main() {
   console.log("Clearing database");
 
   //await Promise.all([
+  await prisma.user.deleteMany();
   await prisma.productImage.deleteMany();
   await prisma.product.deleteMany();
   await prisma.category.deleteMany();
   //]);
 
   //insert category
-  const { categories, products } = initialData;
+  const { categories, products, users } = initialData;
+
+  await prisma.user.createMany({
+    data: users,
+  });
 
   const categoriData = categories.map((category) => ({
     name: category,
