@@ -5,3 +5,4 @@ export { getStockBySlug } from "./product/get-stock-by-slug";
 // authentication
 
 export { authenticate } from "./auth/login";
+export { logout } from "./auth/logout";

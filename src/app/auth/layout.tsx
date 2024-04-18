@@ -6,12 +6,13 @@ export default async function ShopLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
+  //const session = await auth();
 
-  console.log({ session });
-  if (session?.user) {
-    redirect("/");
-  }
+  //console.log({ session });
+  //if (session?.user) {
+   // redirect("/");
+ // }
+
   return (
     <main className="flex justify-center">
       <div className="w-full sm:w-[350px] px-10">{children}</div>
